@@ -1,15 +1,10 @@
-// Интерактивные компоненты для сайта о Василе Быкау
-
-// Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
     initAnimations();
     initInteractiveElements();
     initSecretFacts();
 });
 
-// Анимации с помощью Anime.js
 function initAnimations() {
-    // Анимация заголовка
     anime({
         targets: '.hero-title',
         opacity: [0, 1],
@@ -19,7 +14,6 @@ function initAnimations() {
         delay: 300
     });
 
-    // Анимация цитаты
     anime({
         targets: '.hero-quote',
         opacity: [0, 1],
@@ -29,7 +23,6 @@ function initAnimations() {
         delay: 600
     });
 
-    // Анимация секций при скролле
     const sections = document.querySelectorAll('.section');
     sections.forEach((section, index) => {
         anime({
@@ -43,9 +36,7 @@ function initAnimations() {
     });
 }
 
-// Интерактивные элементы
 function initInteractiveElements() {
-    // Hover эффекты для карточек
     const cards = document.querySelectorAll('.fact-card');
     cards.forEach(card => {
         card.addEventListener('mouseenter', function() {
@@ -69,7 +60,6 @@ function initInteractiveElements() {
         });
     });
 
-    // Интерактивная timeline
     const timelineItems = document.querySelectorAll('.timeline-item');
     timelineItems.forEach((item, index) => {
         item.addEventListener('click', function() {
@@ -78,7 +68,6 @@ function initInteractiveElements() {
     });
 }
 
-// Секретные факты с анимацией
 function initSecretFacts() {
     const secretButtons = document.querySelectorAll('.secret-button');
     secretButtons.forEach(button => {
@@ -89,7 +78,6 @@ function initSecretFacts() {
     });
 }
 
-// Функция для показа секретных фактов
 function revealSecretFact(factId) {
     const factElement = document.getElementById(`fact-${factId}`);
     const button = document.querySelector(`[data-fact="${factId}"]`);
@@ -119,7 +107,6 @@ function revealSecretFact(factId) {
     }
 }
 
-// Функция для показа деталей timeline
 function showTimelineDetails(index) {
     const details = [
         "Нарадзіўся ў беднай сялянскай сям'і ў вёсцы Бычкі",
@@ -137,7 +124,6 @@ function showTimelineDetails(index) {
     alert(details[index] || "Дадатковая інфармацыя");
 }
 
-// Плавная прокрутка к секциям
 function scrollToSection(sectionId) {
     const section = document.getElementById(sectionId);
     if (section) {
