@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="be">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Васіль Быкау - Вядомае і невядомае</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #1a1a1a;
+            --secondary-dark: #2d2d2d;
+            --accent-red: #8b1538;
+            --accent-white: #f5f5f5;
+            --accent-green: #2d5016;
+            --text-light: #e5e5e5;
+            --text-muted: #a1a1a1;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        .hero-bg {
+            background-image: url('background_texture.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .serif-font {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 0.9;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: var(--text-muted);
+        }
+
+        .section {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .fact-card {
+            background: rgba(45, 45, 45, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 21, 56, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .fact-card:hover {
+            border-color: var(--accent-red);
+            box-shadow: 0 10px 30px rgba(139, 21, 56, 0.2);
+        }
+
+        .timeline-item {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            color: var(--accent-red);
+            transform: translateX(10px);
+        }
+
+        .secret-button {
+            background: linear-gradient(45deg, var(--accent-red), #a91b47);
+            transition: all 0.3s ease;
+        }
+
+        .secret-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 21, 56, 0.4);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .quote-text {
+            font-style: italic;
+            position: relative;
+        }
+
+        .quote-text::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--accent-red);
+            position: absolute;
+            left: -2rem;
+            top: -1rem;
+            opacity: 0.3;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-dot.active,
+        .nav-dot:hover {
+            background: var(--accent-red);
+            transform: scale(1.2);
+        }
+
+        .splide__slide img {
+            border-radius: 8px;
+            filter: sepia(20%) contrast(1.1);
+            transition: all 0.3s ease;
+        }
+
+        .splide__slide img:hover {
+            filter: sepia(0%) contrast(1.2);
+            transform: scale(1.02);
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-black bg-opacity-80 backdrop-blur-md">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="serif-font text-2xl font-bold text-white">Васіль Быкаў</div>
+                <div class="text-sm text-gray-300">(by codylamer/Киман Сергей)</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#hero" class="text-gray-300 hover:text-white transition-colors">Галоўная</a>
+                    <a href="#biography" class="text-gray-300 hover:text-white transition-colors">Біяграфія</a>
+                    <a href="#works" class="text-gray-300 hover:text-white transition-colors">Творчасць</a>
+                    <a href="#secrets" class="text-gray-300 hover:text-white transition-colors">Невядомае</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Героический раздел -->
+    <section id="hero" class="hero-bg min-h-screen flex items-center justify-center relative">
+        <div class="container mx-auto px-6 text-center">
+            <div class="max-w-4xl mx-auto">
+                <h1 class="hero-title serif-font font-bold text-white mb-6 hero-title">
+                    Васіль Быкау
+                </h1>
+                <p class="hero-subtitle text-gray-300 mb-8 hero-subtitle">
+                    Вядомае і невядомае
+                </p>
+                <div class="mb-12">
+                    <img src="bykau_portrait_new.jpg" alt="Васіль Быкау" class="w-64 h-64 rounded-full mx-auto mb-8 border-4 border-gray-600 shadow-2xl object-cover">
+                </div>
+                <div class="quote-text text-xl text-gray-300 max-w-2xl mx-auto mb-8 hero-quote">
+                    Мяне цікавіць у першую чаргу не сама вайна, нават не яе быт і тэхналогія бою, але галоўным чынам маральны свет чалавека, магчымасці яго духу.
+                </div>
+                <div class="flex justify-center space-x-4">
+                    <div class="nav-dot active" onclick="scrollToSection('hero')"></div>
+                    <div class="nav-dot" onclick="scrollToSection('biography')"></div>
+                    <div class="nav-dot" onclick="scrollToSection('works')"></div>
+                    <div class="nav-dot" onclick="scrollToSection('secrets')"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Биографический раздел -->
+    <section id="biography" class="py-20 section">
+        <div class="container mx-auto px-6">
+            <h2 class="serif-font text-5xl font-bold text-center mb-16 text-white">Жыццёвы шлях</h2>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+                <div>
+                    <h3 class="serif-font text-3xl font-bold mb-6 text-white">Раннія гады</h3>
+                    <p class="text-gray-300 text-lg leading-relaxed mb-6">
+                        Васіль Уладзіміравіч Быкаў нарадзіўся 19 чэрвеня 1924 года ў вёсцы Бычкі Ушацкага раёна Віцебскай вобласці ў беднай сялянскай сям'і. 
+                    </p>
+                    <p class="text-gray-300 text-lg leading-relaxed">
+                        З ранняга дзяцінства праяўляў цікаўнасць да чытання і мастацтва. Пасля заканчэння семігодкі паступіў на скульптурнае аддзяленне Віцебскага мастацкага вучылішча.
+                    </p>
+                </div>
+                <div class="fact-card p-8 rounded-lg">
+                    <h4 class="serif-font text-2xl font-bold mb-4 text-white">Цікавы факт</h4>
+                    <p class="text-gray-300">
+                        Юны Васіль Быкаў самастойна пераклаў раман Жюля Верна "З пушкі на Месяц" на беларускую мову і адправіў пераклад у Мінск для публікацыі.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="mb-16">
+                <h3 class="serif-font text-3xl font-bold text-center mb-12 text-white">Храналогія жыцця</h3>
+                <div class="space-y-4 max-w-4xl mx-auto">
+                    <div class="timeline-item p-4 border-l-4 border-gray-600 hover:border-red-600 transition-all">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xl font-semibold text-white">1924</span>
+                            <span class="text-gray-300">Нараджэнне ў вёсцы Бычкі</span>
+                        </div>
+                    </div>
+                    <div class="timeline-item p-4 border-l-4 border-gray-600 hover:border-red-600 transition-all">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xl font-semibold text-white">1941</span>
+                            <span class="text-gray-300">Пачатак вайны, удзел у баях</span>
+                        </div>
+                    </div>
+                    <div class="timeline-item p-4 border-l-4 border-gray-600 hover:border-red-600 transition-all">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xl font-semibold text-white">1949</span>
+                            <span class="text-gray-300">Першыя публікацыі ў "Гродненскай правдзе"</span>
+                        </div>
+                    </div>
+                    <div class="timeline-item p-4 border-l-4 border-gray-600 hover:border-red-600 transition-all">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xl font-semibold text-white">1960</span>
+                            <span class="text-gray-300">Публікацыя "Жураўлінага крыку"</span>
+                        </div>
+                    </div>
+                    <div class="timeline-item p-4 border-l-4 border-gray-600 hover:border-red-600 transition-all">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xl font-semibold text-white">1978</span>
+                            <span class="text-gray-300">Пераезд у Мінск</span>
+                        </div>
+                    </div>
+                    <div class="timeline-item p-4 border-l-4 border-gray-600 hover:border-red-600 transition-all">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xl font-semibold text-white">2003</span>
+                            <span class="text-gray-300">Смерць у Мінску</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Раздел с произведениями -->
+    <section id="works" class="py-20 section">
+        <div class="container mx-auto px-6">
+            <h2 class="serif-font text-5xl font-bold text-center mb-16 text-white">Літаратурная спадчына</h2>
+            
+            <div class="mb-16 relative">
+                <img src="books_collection.png" alt="Кнігі Васіля Быкава" class="w-full h-64 object-cover rounded-lg shadow-2xl mb-8">
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-50 rounded-lg"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <h3 class="serif-font text-3xl font-bold text-white text-center">Кнігі Васіля Быкава</h3>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <div class="fact-card p-6 rounded-lg">
+                    <h4 class="serif-font text-xl font-bold mb-4 text-white">«Сотнікаў»</h4>
+                    <p class="text-gray-300 mb-4">
+                        Найвядомейшая повесць пра лёс двух байцоў, якія апынуліся ў нямецкім палоне.
+                    </p>
+                    <div class="text-sm text-gray-400">1970 год</div>
+                </div>
+                
+                <div class="fact-card p-6 rounded-lg">
+                    <h4 class="serif-font text-xl font-bold mb-4 text-white">«Альпійская балада»</h4>
+                    <p class="text-gray-300 mb-4">
+                        Адзіная рамантычная повесць пісьменніка пра каханне падчас вайны.
+                    </p>
+                    <div class="text-sm text-gray-400">1964 год</div>
+                </div>
+                
+                <div class="fact-card p-6 rounded-lg">
+                    <h4 class="serif-font text-xl font-bold mb-4 text-white">«Обелиск»</h4>
+                    <p class="text-gray-300 mb-4">
+                        Повесць пра маральны выбар чалавека ў экстрэмальных сітуацыях.
+                    </p>
+                    <div class="text-sm text-gray-400">1971 год</div>
+                </div>
+            </div>
+
+            <!-- Карусель с цитатами -->
+            <div class="splide" id="quotes-carousel">
+                <div class="splide__track">
+                    <ul class="splide__list">
+                        <li class="splide__slide">
+                            <div class="text-center p-8">
+                                <div class="quote-text text-2xl text-gray-300 mb-4">
+                                    Вайна для мяне — гэта не толькі стрэлы і крыві, гэта перш за ўсё маральны выбар чалавека.
+                                </div>
+                                <div class="text-gray-400">З інтэрв'ю</div>
+                            </div>
+                        </li>
+                        <li class="splide__slide">
+                            <div class="text-center p-8">
+                                <div class="quote-text text-2xl text-gray-300 mb-4">
+                                    Пісьменнік павінен казаць праўду, якой бы горкай яна ні была.
+                                </div>
+                                <div class="text-gray-400">З выступлення</div>
+                            </div>
+                        </li>
+                        <li class="splide__slide">
+                            <div class="text-center p-8">
+                                <div class="quote-text text-2xl text-gray-300 mb-4">
+                                    Мастацтва павінна дапамагаць чалавеку захаваць чалавечнасць.
+                                </div>
+                                <div class="text-gray-400">З ліста</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Раздел с неизвестными фактами -->
+    <section id="secrets" class="py-20 section">
+        <div class="container mx-auto px-6">
+            <h2 class="serif-font text-5xl font-bold text-center mb-16 text-white">Невядомае</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8 mb-16">
+                <div class="fact-card p-8 rounded-lg">
+                    <h3 class="serif-font text-2xl font-bold mb-6 text-white">Сакрэты біяграфіі</h3>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <button class="secret-button px-6 py-3 rounded-lg text-white font-semibold" data-fact="1">
+                                Паказаць факт
+                            </button>
+                            <div id="fact-1" class="hidden mt-4 p-4 bg-gray-800 rounded-lg">
+                                <p class="text-gray-300">
+                                    Васіль Быкаў у маладосці марыў стаць скульптарам і паступіў у мастацкае вучылішча, але быў вымушаны кінуць вучобу з-за адмены стыпендый.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <button class="secret-button px-6 py-3 rounded-lg text-white font-semibold" data-fact="2">
+                                Паказаць факт
+                            </button>
+                            <div id="fact-2" class="hidden mt-4 p-4 bg-gray-800 rounded-lg">
+                                <p class="text-gray-300">
+                                    Падчас вайны Быкаў двойчы быў паранены. У 1944 годзе ён некаторы час лічыўся загінулым і быў запісаны ў спісах памерлых.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <button class="secret-button px-6 py-3 rounded-lg text-white font-semibold" data-fact="3">
+                                Паказаць факт
+                            </button>
+                            <div id="fact-3" class="hidden mt-4 p-4 bg-gray-800 rounded-lg">
+                                <p class="text-gray-300">
+                                    У 1997 годзе Быкаў з'ехаў у палітычную эміграцыю і жыў у Фінляндыі, Германіі і Чэхіі, але ў 2003 годзе вярнуўся на радзіму за месяц да смерці.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="fact-card p-8 rounded-lg">
+                    <h3 class="serif-font text-2xl font-bold mb-6 text-white">Цікавосткі</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="border-l-4 border-red-600 pl-4">
+                            <h4 class="font-bold text-white mb-2">Мастак і пісьменнік</h4>
+                            <p class="text-gray-300">
+                                Быкаў не толькі пісаў, але і маляваў. Ён стварыў шмат малюнкаў і эскізаў, некаторыя з якіх захаваліся да нашых дзён.
+                            </p>
+                        </div>
+                        
+                        <div class="border-l-4 border-red-600 pl-4">
+                            <h4 class="font-bold text-white mb-2">Перакладчык</h4>
+                            <p class="text-gray-300">
+                                Многія свае творы Быкаў сам перакладаў з беларускай на рускую мову, каб яны былі даступныя больш шырокай аўдыторыі.
+                            </p>
+                        </div>
+                        
+                        <div class="border-l-4 border-red-600 pl-4">
+                            <h4 class="font-bold text-white mb-2">Грамадскі дзеяч</h4>
+                            <p class="text-gray-300">
+                                Быкаў быў адным з заснавальнікаў Беларускага народнага фронту "Адраджэнне" і актыўна ўдзельнічаў у палітычным жыцці краіны.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Подвал -->
+    <footer class="py-12 border-t border-gray-800">
+        <div class="container mx-auto px-6 text-center">
+            <div class="serif-font text-2xl font-bold text-white mb-4">Васіль Быкау</div>
+            <p class="text-gray-400 mb-6">(1924 - 2003)</p>
+            <div class="text-gray-500 text-sm">
+                Сайт прысвечаны выдатнаму беларускаму пісьменніку, чые творы назаўсёды засталіся ў скарбніцы сусветнай літаратуры.
+            </div>
+        </div>
+    </footer>
+
+    <script src="interactive.js"></script>
+    <script>
+        // Инициализация карусели
+        document.addEventListener('DOMContentLoaded', function() {
+            new Splide('#quotes-carousel', {
+                type: 'loop',
+                autoplay: true,
+                interval: 5000,
+                arrows: false,
+                pagination: true,
+                gap: '2rem'
+            }).mount();
+        });
+
+        // Плавная прокрутка к секциям
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+
+        // Обновление активной точки навигации
+        window.addEventListener('scroll', function() {
+            const sections = ['hero', 'biography', 'works', 'secrets'];
+            const navDots = document.querySelectorAll('.nav-dot');
+            
+            let current = '';
+            sections.forEach(sectionId => {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    const rect = section.getBoundingClientRect();
+                    if (rect.top <= 100 && rect.bottom >= 100) {
+                        current = sectionId;
+                    }
+                }
+            });
+            
+            navDots.forEach((dot, index) => {
+                dot.classList.remove('active');
+                if (sections[index] === current) {
+                    dot.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
